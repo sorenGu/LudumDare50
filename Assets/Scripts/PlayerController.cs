@@ -5,21 +5,21 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour {
     public float rotationSpeed = 7f;
     GameController gameController;
-    CharacterController controller;
+    Rigidbody m_Rigidbody;
 
     private void OnEnable() {
         gameController = transform.parent.GetComponent<GameController>();
-        controller = gameObject.GetComponent<CharacterController>();
+        m_Rigidbody = GetComponent<Rigidbody>();
     }
 
-    void Update() {
+    void FixedUpdate() {
         var horizontal = Input.GetAxis("Horizontal");
         var vertical = Input.GetAxis("Vertical");
         Vector3 direction = new Vector3(horizontal, 0, vertical);
         direction.Normalize();
 
         if (direction != Vector3.zero) {
-            controller.Move(direction * Time.deltaTime * gameController.gameSpeed * 2);
+            m_Rigidbody.MovePosition(transform.position + direction * Time.deltaTime *  gameController.gameSpeed * 2);
             /* TODO walk/run animation */
             transform.rotation = Quaternion.Slerp(
                 transform.rotation,
@@ -28,7 +28,7 @@ public class PlayerController : MonoBehaviour {
             );
         } else {
             // TODO idle animation
-            transform.Translate( gameController.downDirection * (gameController.gameSpeed * Time.deltaTime), Space.World);
+            m_Rigidbody.MovePosition(transform.position + gameController.downDirection * Time.deltaTime *  gameController.gameSpeed);
         }
         // TODO what when out of screen?
     }

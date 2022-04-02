@@ -9,8 +9,11 @@ public class ObjectManager : MonoBehaviour {
     public List<GameObject> pathSegments;
     public List<GameObject> trees;
     float pathLength = 10f;
+    float objectMaxXOffset = 22f;
 
     GameController gameController;
+
+
 
     private void OnEnable() {
         gameController = GetComponent<GameController>();
@@ -33,14 +36,26 @@ public class ObjectManager : MonoBehaviour {
             AddSegment(postion);
         }
     }
-    private void AddSegment(Vector3 postion) {
-        GameObject _path = Instantiate(pathSegments[UnityEngine.Random.Range(0, pathSegments.Count)], postion, Quaternion.identity);
+    private void AddSegment(Vector3 position) {
+        GameObject _path = Instantiate(pathSegments[UnityEngine.Random.Range(0, pathSegments.Count)], position, Quaternion.identity);
         pathObjects.Add(_path.transform);
         AddObjects(_path.transform);
     }
 
     private void AddObjects(Transform parent) {
-        // _object = 
+        int max = 3;
+        for (int i = 0; i <= max; i++) {
+            float offset_x = UnityEngine.Random.Range(2, objectMaxXOffset + 2);
+            Vector3 offset = new Vector3(
+                offset_x * RandomSign(), 0, 
+                UnityEngine.Random.Range(-pathLength, 0)
+                );
+            Instantiate(trees[UnityEngine.Random.Range(0, trees.Count)], parent.position + offset, Quaternion.identity, parent);
+        }
+    }
+
+    private float RandomSign() {
+        return UnityEngine.Random.Range(0,2)*2-1;
     }
 
     private void Move() {
@@ -53,6 +68,7 @@ public class ObjectManager : MonoBehaviour {
         }
         if (wasDestroyed) {
             AddSegment(pathObjects[pathObjects.Count - 1].position + new Vector3(0, 0, pathLength));
+            gameController.AddScore();
         }
     }
 
