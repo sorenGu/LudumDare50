@@ -8,11 +8,15 @@ public class GameController : MonoBehaviour {
     public float score { get; private set; } = 0;
     public Vector3 downDirection { get; private set; } = new Vector3(0, 0, -1);
 
-    public Action<float> scoreChange; 
+    public Action<float> ScoreChange;
+
+    private void Start() {
+        ScoreChange?.Invoke(score);
+    }
 
 
     internal void AddScore() {
         score += gameSpeed;
-        scoreChange?.Invoke(score);
+        ScoreChange?.Invoke(score);
     }
 }
