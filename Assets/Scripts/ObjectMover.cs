@@ -4,10 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class ObjectManager : MonoBehaviour {
-    List<Transform> randomObjects = new List<Transform>();
     List<Transform> pathObjects = new List<Transform>();
-
-    public Transform playerTransform;
 
     public List<GameObject> pathSegments;
     public List<GameObject> trees;
@@ -20,30 +17,33 @@ public class ObjectManager : MonoBehaviour {
     }
 
     void Start() {
-        InitPath();
-        InitRandomObjects();
+        Init();
     }
 
     void Update() {
-        MovePath();
-        MoveRandomObjects();
+        Move();
     }
 
-    private void InitPath() {
+    private void Init() {
         /* ToDo: 
         Erster Tile soll etwas schoener / anders sein
         */
         for (int i = 0; i <= 6; i++) {
             Vector3 postion = new Vector3(0, 0, -pathLength + (pathLength * i));
-            AddPathSegment(postion);
+            AddSegment(postion);
         }
     }
-    private void AddPathSegment(Vector3 postion) {
+    private void AddSegment(Vector3 postion) {
         GameObject _path = Instantiate(pathSegments[UnityEngine.Random.Range(0, pathSegments.Count)], postion, Quaternion.identity);
         pathObjects.Add(_path.transform);
+        AddObjects(_path.transform);
     }
 
-    private void MovePath() {
+    private void AddObjects(Transform parent) {
+        // _object = 
+    }
+
+    private void Move() {
         bool wasDestroyed = false;
         for (var i = pathObjects.Count - 1; i > -1; i--) {
             if (moveObject(pathObjects[i])) {
@@ -52,30 +52,7 @@ public class ObjectManager : MonoBehaviour {
             }
         }
         if (wasDestroyed) {
-            AddPathSegment(pathObjects[pathObjects.Count - 1].position + new Vector3(0, 0, pathLength));
-        }
-    }
-
-    private void InitRandomObjects() {
-        for (int i = 0; i <= 6; i++) {
-            AddRandomObjectSegment(-pathLength + (pathLength * i));
-        }
-    }
-
-    private void AddRandomObjectSegment(float end_postion_z) {
-        
-    }
-
-    private void MoveRandomObjects() {
-        bool wasDestroyed = false;
-        for (var i = pathObjects.Count - 1; i > -1; i--) {
-            if (moveObject(pathObjects[i])) {
-                wasDestroyed = true;
-                pathObjects.RemoveAt(i);
-            }
-        }
-        if (wasDestroyed) {
-            AddPathSegment(pathObjects[pathObjects.Count - 1].position + new Vector3(0, 0, pathLength));
+            AddSegment(pathObjects[pathObjects.Count - 1].position + new Vector3(0, 0, pathLength));
         }
     }
 
