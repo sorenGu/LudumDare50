@@ -11,17 +11,21 @@ public class Enemy : MonoBehaviour {
 
     float eatDistance = 2f;
 
+    delegate void CurrentAction();
+    CurrentAction handler;
+
     private void OnEnable() {
         gameController = transform.parent.GetComponent<GameController>();
         animator = GetComponentInChildren<Animator>();
+        handler = CheckDistance;
     }
 
     void Update() {
-        CheckDistance();
-        transform.Translate(Vector3.forward * Time.deltaTime * (float)(gameController.gameSpeed * 0.05));
+        handler();
     }
 
-    private void CheckDistance() {
+    public void CheckDistance() {
+        transform.Translate(Vector3.forward * Time.deltaTime * (float)(gameController.gameSpeed * 0.05));
         float distance = 9999999; 
         foreach (Transform food in foods) {
             distance = Math.Min((transform.position - food.position).sqrMagnitude, distance);
@@ -30,7 +34,7 @@ public class Enemy : MonoBehaviour {
         if (distance < eatDistance) {
             animator.SetTrigger("GameOver");
             gameController.GameOver();
-            Destroy(this);
+            handler = AfterGameAction;
         } else if (distance < eatDistance * 4) {
             animator.SetBool("Close", true);
             // TODO rotate to closest Food
@@ -39,5 +43,9 @@ public class Enemy : MonoBehaviour {
             // TODO rotate face straight
         }
 
+    }
+
+    private void AfterGameAction() {
+        // TODO rotate
     }
 }

@@ -6,7 +6,8 @@ using UnityEngine.SceneManagement;
 
 public class UIGameOverPanel : MonoBehaviour
 {
-    TextMeshProUGUI Text;
+    public TextMeshProUGUI Text;
+    
 
     public void Init(float score) {
         Text.SetText(((int)score).ToString("00000"));
