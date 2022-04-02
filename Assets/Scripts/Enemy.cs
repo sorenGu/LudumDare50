@@ -3,15 +3,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy : MonoBehaviour
-{
+public class Enemy : MonoBehaviour {
     GameController gameController;
     public List<Transform> foods;
+
+    Animator animator;
 
     float eatDistance = 2f;
 
     private void OnEnable() {
         gameController = transform.parent.GetComponent<GameController>();
+        animator = GetComponentInChildren<Animator>();
     }
 
     void Update() {
@@ -20,16 +22,18 @@ public class Enemy : MonoBehaviour
     }
 
     private void CheckDistance() {
-        foreach(Transform food in foods) {
-            float distance = (transform.position - food.position).sqrMagnitude;
-            if (distance < eatDistance) {
-                // Todo gameOver
-                Debug.Log("AaA!!!");
-            } else if (distance < eatDistance * 4) {
-                // TODO spookier sounds and new animation
-            } else {
-                // TODO rotate to normal (delegate)
-            }
+        float distance = 9999999; 
+        foreach (Transform food in foods) {
+            distance = Math.Min((transform.position - food.position).sqrMagnitude, distance);
         }
+
+        if (distance < eatDistance) {
+            animator.SetTrigger("GameOver");
+        } else if (distance < eatDistance * 4) {
+            animator.SetBool("Close", true);
+        } else {
+            animator.SetBool("Close", false);
+        }
+
     }
 }
