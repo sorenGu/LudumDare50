@@ -31,6 +31,7 @@ public class Enemy : MonoBehaviour {
             animator.SetTrigger("GameOver");
         } else if (distance < eatDistance * 4) {
             animator.SetBool("Close", true);
+            gameController.GameOver();
         } else {
             animator.SetBool("Close", false);
         }
