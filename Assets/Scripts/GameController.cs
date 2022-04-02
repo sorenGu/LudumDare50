@@ -25,5 +25,6 @@ public class GameController : MonoBehaviour {
     public void GameOver(){
         OnGameOver?.Invoke();
         GameOverPanel.SetActive(true);
+        GameOverPanel.GetComponent<UIGameOverPanel>().Init(score);
     }
 }

@@ -13,10 +13,13 @@ public class ObjectManager : MonoBehaviour {
 
     GameController gameController;
 
-
-
     private void OnEnable() {
         gameController = GetComponent<GameController>();
+        gameController.OnGameOver += OnGameOver;
+    }
+
+    private void OnGameOver() {
+        Destroy(this);
     }
 
     void Start() {

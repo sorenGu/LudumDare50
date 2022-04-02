@@ -9,7 +9,12 @@ public class PlayerController : MonoBehaviour {
 
     private void OnEnable() {
         gameController = transform.parent.GetComponent<GameController>();
+        gameController.OnGameOver += OnGameOver;
         m_Rigidbody = GetComponent<Rigidbody>();
+    }
+
+    private void OnGameOver() {
+        Destroy(this);
     }
 
     void FixedUpdate() {
