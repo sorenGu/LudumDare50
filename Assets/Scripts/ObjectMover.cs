@@ -8,8 +8,7 @@ public class ObjectMover : MonoBehaviour {
     List<Transform> pathObjects = new List<Transform>();
 
     public List<GameObject> pathSegments;
-    float pathStart = -10f;
-
+    float pathLength = 10f;
     float speed = 5f;
     Vector3 direction = new Vector3(0, 0, -1);
 
@@ -19,14 +18,19 @@ public class ObjectMover : MonoBehaviour {
     }
 
     private void SpawnPath() {
-        for (int i = 0; i <= 4; i++) {
-            Vector3 postion = new Vector3(0, 0, pathStart + 10 * i);
+        for (int i = 0; i <= 6; i++) {
+            Debug.Log(-pathLength);
+            Debug.Log(pathLength * i);
+            Vector3 postion = new Vector3(0, 0, -pathLength + (pathLength * i));
             AddPathSegment(postion);
-
         }
     }
-    // TODO move objects as groups
+
     void Update() {
+        movePath();
+    }
+
+    private void movePath() {
         bool wasDestroyed = false;
         for (var i = pathObjects.Count - 1; i > -1; i--) {
             if (moveObject(pathObjects[i])) {
@@ -35,8 +39,9 @@ public class ObjectMover : MonoBehaviour {
             }
         }
         if (wasDestroyed) {
-
+            AddPathSegment(pathObjects[pathObjects.Count - 1].position + new Vector3(0, 0, pathLength));
         }
+        Debug.Log(pathObjects.Count);
     }
 
     private void AddPathSegment(Vector3 postion) {
