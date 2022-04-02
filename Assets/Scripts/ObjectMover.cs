@@ -7,11 +7,12 @@ public class ObjectMover : MonoBehaviour {
     List<Transform> randomObjects = new List<Transform>();
     List<Transform> pathObjects = new List<Transform>();
 
+    public Transform playerTransform;
+
     public List<GameObject> pathSegments;
     float pathLength = 10f;
     float speed = 5f;
     Vector3 direction = new Vector3(0, 0, -1);
-
 
     void Start() {
         SpawnPath();
@@ -41,7 +42,6 @@ public class ObjectMover : MonoBehaviour {
         if (wasDestroyed) {
             AddPathSegment(pathObjects[pathObjects.Count - 1].position + new Vector3(0, 0, pathLength));
         }
-        Debug.Log(pathObjects.Count);
     }
 
     private void AddPathSegment(Vector3 postion) {
