@@ -26,6 +26,21 @@ public class ObjectManager : MonoBehaviour {
 
     void Update() {
         MovePath();
+        MoveRandomObjects();
+    }
+
+    private void InitPath() {
+        /* ToDo: 
+        Erster Tile soll etwas schoener / anders sein
+        */
+        for (int i = 0; i <= 6; i++) {
+            Vector3 postion = new Vector3(0, 0, -pathLength + (pathLength * i));
+            AddPathSegment(postion);
+        }
+    }
+    private void AddPathSegment(Vector3 postion) {
+        GameObject _path = Instantiate(pathSegments[UnityEngine.Random.Range(0, pathSegments.Count)], postion, Quaternion.identity);
+        pathObjects.Add(_path.transform);
     }
 
     private void MovePath() {
@@ -43,23 +58,25 @@ public class ObjectManager : MonoBehaviour {
 
     private void InitRandomObjects() {
         for (int i = 0; i <= 6; i++) {
-            Vector3 postion = new Vector3(0, 0, -pathLength + (pathLength * i));
-            // AddPathSegment(postion);
+            AddRandomObjectSegment(-pathLength + (pathLength * i));
         }
     }
 
-    private void InitPath() {
-        /* ToDo: 
-        Erster Tile soll etwas schoener / anders sein
-        */
-        for (int i = 0; i <= 6; i++) {
-            Vector3 postion = new Vector3(0, 0, -pathLength + (pathLength * i));
-            AddPathSegment(postion);
-        }
+    private void AddRandomObjectSegment(float end_postion_z) {
+        
     }
-    private void AddPathSegment(Vector3 postion) {
-        GameObject _path = Instantiate(pathSegments[UnityEngine.Random.Range(0, pathSegments.Count)], postion, Quaternion.identity);
-        pathObjects.Add(_path.transform);
+
+    private void MoveRandomObjects() {
+        bool wasDestroyed = false;
+        for (var i = pathObjects.Count - 1; i > -1; i--) {
+            if (moveObject(pathObjects[i])) {
+                wasDestroyed = true;
+                pathObjects.RemoveAt(i);
+            }
+        }
+        if (wasDestroyed) {
+            AddPathSegment(pathObjects[pathObjects.Count - 1].position + new Vector3(0, 0, pathLength));
+        }
     }
 
     private bool moveObject(Transform element) {
