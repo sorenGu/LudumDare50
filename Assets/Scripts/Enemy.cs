@@ -18,7 +18,7 @@ public class Enemy : MonoBehaviour {
 
     void Update() {
         CheckDistance();
-        // transform.Translate(Vector3.forward * Time.deltaTime * (float)(gameController.gameSpeed * 0.05));
+        transform.Translate(Vector3.forward * Time.deltaTime * (float)(gameController.gameSpeed * 0.05));
     }
 
     private void CheckDistance() {
@@ -30,10 +30,13 @@ public class Enemy : MonoBehaviour {
         if (distance < eatDistance) {
             animator.SetTrigger("GameOver");
             gameController.GameOver();
+            Destroy(this);
         } else if (distance < eatDistance * 4) {
             animator.SetBool("Close", true);
+            // TODO rotate to closest Food
         } else {
             animator.SetBool("Close", false);
+            // TODO rotate face straight
         }
 
     }

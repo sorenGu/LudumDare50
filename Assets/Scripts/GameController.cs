@@ -9,6 +9,8 @@ public class GameController : MonoBehaviour {
     public Vector3 downDirection { get; private set; } = new Vector3(0, 0, -1);
 
     public Action<float> ScoreChange;
+    public Action OnGameOver;
+    public GameObject GameOverPanel;
 
     private void Start() {
         ScoreChange?.Invoke(score);
@@ -21,8 +23,7 @@ public class GameController : MonoBehaviour {
     }
 
     public void GameOver(){
-        Debug.Log("Game over!");
-        
-        
+        OnGameOver?.Invoke();
+        GameOverPanel.SetActive(true);
     }
 }
