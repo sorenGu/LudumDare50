@@ -11,8 +11,12 @@ public class ObjectMover : MonoBehaviour {
 
     public List<GameObject> pathSegments;
     float pathLength = 10f;
-    float speed = 5f;
-    Vector3 direction = new Vector3(0, 0, -1);
+
+    GameController gameController;
+
+    private void OnEnable() {
+        gameController = GetComponent<GameController>();
+    }
 
     void Start() {
         SpawnPath();
@@ -53,7 +57,7 @@ public class ObjectMover : MonoBehaviour {
     }
 
     private bool moveObject(Transform element) {
-        element.Translate(direction * speed * Time.deltaTime);
+        element.Translate(gameController.downDirection * gameController.gameSpeed * Time.deltaTime);
         if (element.position.z <= -12f) {
             Destroy(element.gameObject);
             return true;
