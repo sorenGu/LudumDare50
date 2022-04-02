@@ -19,4 +19,10 @@ public class GameController : MonoBehaviour {
         score += gameSpeed;
         ScoreChange?.Invoke(score);
     }
+
+    public void GameOver(){
+        Debug.Log("Game over!");
+        
+        
+    }
 }

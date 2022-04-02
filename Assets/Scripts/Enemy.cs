@@ -23,8 +23,7 @@ public class Enemy : MonoBehaviour
         foreach(Transform food in foods) {
             float distance = (transform.position - food.position).sqrMagnitude;
             if (distance < eatDistance) {
-                // Todo gameOver
-                Debug.Log("AaA!!!");
+                gameController.GameOver();
             } else if (distance < eatDistance * 4) {
                 // TODO spookier sounds and new animation
             } else {
