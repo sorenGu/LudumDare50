@@ -42,7 +42,9 @@ public class Enemy : MonoBehaviour {
             CurrentAction = CheckDistance;
             animator.SetTrigger("Scare");
         } else {
-            transform.Translate(Vector3.back * Time.deltaTime * (float)(gameController.gameSpeed * 0.2));
+            if (transform.position.z > -5) {
+                transform.Translate(Vector3.back * Time.deltaTime * (float)(gameController.gameSpeed * 0.2));
+            }
         }
     }
 
@@ -65,10 +67,8 @@ public class Enemy : MonoBehaviour {
             CurrentAction = AfterGameAction;
         } else if (distance < eatDistance * 4) {
             animator.SetBool("Close", true);
-            // TODO rotate to closest Food
         } else {
             animator.SetBool("Close", false);
-            // TODO rotate face straight
         }
         transform.LookAt(closestFood.position);
     }

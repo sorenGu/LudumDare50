@@ -62,8 +62,7 @@ public class ObjectManager : MonoBehaviour {
             currentSegmentsPerItem = 0;
             float sign = RandomSign();
             Instantiate(lantern, parent.position + new Vector3(sign * 2.2f, 0, 0), Quaternion.Euler(0, (sign + 1) * 90, 0), parent);
-
-
+            gameController.IncreaseSpeed();
         } else {
             currentSegmentsPerItem += 1;
         }

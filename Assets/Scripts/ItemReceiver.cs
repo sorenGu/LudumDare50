@@ -5,9 +5,10 @@ using UnityEngine;
 
 public class ItemReceiver : MonoBehaviour {
     public Action OnReceiveItem;
+    public GameObject pentagram;
 
     internal void ReceiveItem() {
-        //TODO animate
+        pentagram.SetActive(true);
         OnReceiveItem?.Invoke();
     }
 }

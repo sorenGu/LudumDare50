@@ -27,4 +27,8 @@ public class GameController : MonoBehaviour {
         GameOverPanel.SetActive(true);
         GameOverPanel.GetComponent<UIGameOverPanel>().Init(score);
     }
+
+    internal void IncreaseSpeed() {
+        gameSpeed += 1;
+    }
 }
