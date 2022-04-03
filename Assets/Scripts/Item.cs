@@ -10,7 +10,9 @@ public class Item : MonoBehaviour {
 
     private void OnTriggerEnter(Collider other) {
         if (other.tag == "Player") {
-            other.GetComponent<ItemHandler>().AddItem("Pentagram");
+            if (other.GetComponent<ItemHandler>().AddItem("Pentagram")) {
+                Destroy(gameObject);
+            }
         }
     }
 
