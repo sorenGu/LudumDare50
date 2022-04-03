@@ -36,9 +36,6 @@ public class ObjectManager : MonoBehaviour {
     }
 
     private void Init() {
-        /* ToDo: 
-        Erster Tile soll etwas schoener / anders sein
-        */
         for (int i = 0; i <= 6; i++) {
             Vector3 postion = new Vector3(0, 0, -pathLength + (pathLength * i));
             AddSegment(postion);

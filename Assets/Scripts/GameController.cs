@@ -29,6 +29,6 @@ public class GameController : MonoBehaviour {
     }
 
     internal void IncreaseSpeed() {
-        gameSpeed += 2/gameSpeed;
+        gameSpeed += 3/gameSpeed;
     }
 }

@@ -5,7 +5,7 @@ using UnityEngine;
 public class Item : MonoBehaviour {
 
     void Update() {
-        // TODO rotate
+        transform.Rotate(0f, 0.3f, 0.0f, Space.Self);
     }
 
     private void OnTriggerEnter(Collider other) {

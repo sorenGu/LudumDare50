@@ -23,9 +23,6 @@ public class ObjectSpawner : MonoBehaviour {
     }
 
     private void SpawnPath() {
-        /* ToDo: 
-        Erster Tile soll etwas schoener / anders sein
-        */
         for (int i = 0; i <= 6; i++) {
             Debug.Log(-pathLength);
             Debug.Log(pathLength * i);

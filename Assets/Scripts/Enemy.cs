@@ -74,6 +74,6 @@ public class Enemy : MonoBehaviour {
     }
 
     private void AfterGameAction() {
-        // TODO rotate
+        transform.Rotate(0f, 0.05f, 0.0f, Space.Self);
     }
 }
