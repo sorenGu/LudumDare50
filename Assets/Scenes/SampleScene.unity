@@ -609,7 +609,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: f7d5b1d5bd5751946a1aa20c8322dbb7, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f7d5b1d5bd5751946a1aa20c8322dbb7, type: 3}
@@ -2117,7 +2117,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f13ff81dfd159e4458560edc468eb2c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentItem: {fileID: 0}
+  currentItem: {fileID: 199185605}
   friend: {fileID: 1506551001}
   friendItemReceiver: {fileID: 1506550999}
 --- !u!114 &1505006434
@@ -2541,7 +2541,7 @@ GameObject:
   - component: {fileID: 1988246134}
   - component: {fileID: 1988246133}
   m_Layer: 0
-  m_Name: PentagramActiveLight
+  m_Name: PlayerLantern
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
