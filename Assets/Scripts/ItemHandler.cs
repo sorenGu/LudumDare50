@@ -8,7 +8,7 @@ public class ItemHandler : MonoBehaviour {
 
     public Transform friend;
     public ItemReceiver friendItemReceiver;
-    float eatDistance = 2f;
+    float eatDistance = 4f;
 
     Action currentAction;
 
