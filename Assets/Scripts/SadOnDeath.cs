@@ -10,7 +10,12 @@ public class SadOnDeath : MonoBehaviour
 
     public Action DeathOcurred;
 
+    AudioSource audioSource;
+
+    public AudioClip dieSound;
+
     private void OnEnable() {
+        audioSource = GetComponent<AudioSource>();
         animator = GetComponentInChildren<Animator>();
         friend.DeathOcurred += OnFriendDeathOcurred;
     }
@@ -19,6 +24,8 @@ public class SadOnDeath : MonoBehaviour
         transform.LookAt(new Vector3(1,0,1));
         animator.SetTrigger("Death");
         DeathOcurred?.Invoke();
+        audioSource.clip = dieSound;
+        audioSource.Play();
     }
 
     private void OnFriendDeathOcurred() {
