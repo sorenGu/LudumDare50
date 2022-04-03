@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class Enemy : MonoBehaviour {
     GameController gameController;
@@ -15,8 +16,16 @@ public class Enemy : MonoBehaviour {
 
     float currentMoveBackTimer;
 
+    public AudioClip defaultAudioClip;
+    public AudioClip closeAudioClip;
+    public AudioClip fressenAudioClip;
+
+    AudioSource audioSource;
+
+
     private void OnEnable() {
         gameController = transform.parent.GetComponent<GameController>();
+        audioSource= GetComponent<AudioSource>();
         animator = GetComponentInChildren<Animator>();
         CurrentAction = CheckDistance;
         foreach (Transform food in foods) {
@@ -61,13 +70,16 @@ public class Enemy : MonoBehaviour {
         }
 
         if (distance < eatDistance) {
+            SetSoundClip(fressenAudioClip, false);
             animator.SetTrigger("GameOver");
             gameController.GameOver();
             closestFood.GetComponent<SadOnDeath>().Die();
             CurrentAction = AfterGameAction;
         } else if (distance < eatDistance * 4) {
+            SetSoundClip(closeAudioClip);
             animator.SetBool("Close", true);
         } else {
+            SetSoundClip(defaultAudioClip);
             animator.SetBool("Close", false);
         }
         transform.LookAt(closestFood.position);
@@ -75,5 +87,13 @@ public class Enemy : MonoBehaviour {
 
     private void AfterGameAction() {
         transform.Rotate(0f, 0.05f, 0.0f, Space.Self);
+    }
+
+    void SetSoundClip(AudioClip clip, bool loop=true) {
+        if (audioSource.clip != clip) {
+            audioSource.clip = clip;
+            audioSource.loop = loop;
+            audioSource.Play();
+        }
     }
 }
