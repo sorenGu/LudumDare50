@@ -59,8 +59,8 @@ ModelImporter:
       name: Injured
       takeName: Injured
       internalID: 0
-      firstFrame: 0
-      lastFrame: 111
+      firstFrame: 67
+      lastFrame: 91
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -88,8 +88,8 @@ ModelImporter:
       name: Run
       takeName: Run.001
       internalID: 0
-      firstFrame: 0
-      lastFrame: 60
+      firstFrame: 36
+      lastFrame: 47.8
       wrapMode: 0
       orientationOffsetY: 0
       level: 0

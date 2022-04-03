@@ -47,15 +47,21 @@ public class Enemy : MonoBehaviour {
     }
 
     public void CheckDistance() {
-        transform.Translate(Vector3.forward * Time.deltaTime * (float)(gameController.gameSpeed * 0.05));
-        float distance = 9999999; 
+        transform.Translate(Vector3.forward * Time.deltaTime * (float)(gameController.gameSpeed * 0.05), Space.World);
+        float distance = 9999999;
+        Transform closestFood = transform;
         foreach (Transform food in foods) {
-            distance = Math.Min((transform.position - food.position).sqrMagnitude, distance);
+            float tmpDistance = (transform.position - food.position).sqrMagnitude;
+            if (tmpDistance < distance) {
+                distance = tmpDistance;
+                closestFood = food;
+            }        
         }
 
         if (distance < eatDistance) {
             animator.SetTrigger("GameOver");
             gameController.GameOver();
+            closestFood.GetComponent<SadOnDeath>().Die();
             CurrentAction = AfterGameAction;
         } else if (distance < eatDistance * 4) {
             animator.SetBool("Close", true);
@@ -64,7 +70,7 @@ public class Enemy : MonoBehaviour {
             animator.SetBool("Close", false);
             // TODO rotate face straight
         }
-
+        transform.LookAt(closestFood.position);
     }
 
     private void AfterGameAction() {

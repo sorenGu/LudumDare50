@@ -6,11 +6,13 @@ public class PlayerController : MonoBehaviour {
     public float rotationSpeed = 7f;
     GameController gameController;
     Rigidbody m_Rigidbody;
+    Animator animator;
 
     private void OnEnable() {
         gameController = transform.parent.GetComponent<GameController>();
         gameController.OnGameOver += OnGameOver;
         m_Rigidbody = GetComponent<Rigidbody>();
+        animator = GetComponentInChildren<Animator>();
     }
 
     private void OnGameOver() {
@@ -24,6 +26,7 @@ public class PlayerController : MonoBehaviour {
         direction.Normalize();
 
         if (direction != Vector3.zero) {
+            animator.SetBool("Running", true);
             m_Rigidbody.MovePosition(transform.position + direction * Time.deltaTime *  gameController.gameSpeed * 2);
             /* TODO walk/run animation */
             transform.rotation = Quaternion.Slerp(
@@ -33,6 +36,7 @@ public class PlayerController : MonoBehaviour {
             );
         } else {
             // TODO idle animation
+            animator.SetBool("Running", false);
             m_Rigidbody.MovePosition(transform.position + gameController.downDirection * Time.deltaTime *  gameController.gameSpeed);
         }
         // TODO what when out of screen?
