@@ -43,7 +43,7 @@ public class Enemy : MonoBehaviour {
             animator.SetTrigger("Scare");
         } else {
             if (transform.position.z > -5) {
-                transform.Translate(Vector3.back * Time.deltaTime * (float)(gameController.gameSpeed * 0.2));
+                transform.Translate(Vector3.back * Time.deltaTime * (float)(gameController.gameSpeed * 0.2), Space.World);
             }
         }
     }
