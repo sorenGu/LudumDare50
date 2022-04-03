@@ -32,7 +32,7 @@ public class Enemy : MonoBehaviour {
 
     private void OnFoodReceiveItem() {
         animator.SetTrigger("Scare");
-        currentMoveBackTimer = 20 / gameController.gameSpeed;
+        currentMoveBackTimer = 15 / gameController.gameSpeed;
         CurrentAction = MoveBack;
     }
 
@@ -49,7 +49,7 @@ public class Enemy : MonoBehaviour {
     }
 
     public void CheckDistance() {
-        transform.Translate(Vector3.forward * Time.deltaTime * (float)(gameController.gameSpeed * 0.05), Space.World);
+        transform.Translate(Vector3.forward * Time.deltaTime * (float)(gameController.gameSpeed * 0.07), Space.World);
         float distance = 9999999;
         Transform closestFood = transform;
         foreach (Transform food in foods) {
