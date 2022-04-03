@@ -8,10 +8,14 @@ public class ObjectManager : MonoBehaviour {
 
     public List<GameObject> pathSegments;
     public List<GameObject> trees;
+    public List<GameObject> items;
     float pathLength = 10f;
     float objectMaxXOffset = 22f;
 
     GameController gameController;
+
+    int segmentsPerItem = 3;
+    int currentSegmentsPerItem = 1;
 
     private void OnEnable() {
         gameController = GetComponent<GameController>();
@@ -46,15 +50,27 @@ public class ObjectManager : MonoBehaviour {
     }
 
     private void AddObjects(Transform parent) {
-        int max = 3;
-        for (int i = 0; i <= max; i++) {
-            float offset_x = UnityEngine.Random.Range(2, objectMaxXOffset + 2);
-            Vector3 offset = new Vector3(
-                offset_x * RandomSign(), 0, 
-                UnityEngine.Random.Range(-pathLength, 0)
-                );
+        int Trees = 3;
+        for (int i = 0; i <= Trees; i++) {
+            Vector3 offset = GetRandomOffset(2f, 2f);
             Instantiate(trees[UnityEngine.Random.Range(0, trees.Count)], parent.position + offset, Quaternion.identity, parent);
         }
+        if (currentSegmentsPerItem >= segmentsPerItem) {
+            Vector3 offset = GetRandomOffset(4f, 0);
+            Instantiate(items[UnityEngine.Random.Range(0, items.Count)], parent.position + offset, Quaternion.identity, parent);
+            currentSegmentsPerItem = 0;
+        } else {
+            currentSegmentsPerItem += 1;
+        }
+    }
+
+    private Vector3 GetRandomOffset(float minX, float maxXMod) {
+        float offset_x = UnityEngine.Random.Range(minX, objectMaxXOffset + maxXMod);
+        Vector3 offset = new Vector3(
+            offset_x * RandomSign(), 0,
+            UnityEngine.Random.Range(-pathLength, 0)
+            );
+        return offset;
     }
 
     private float RandomSign() {
