@@ -18,8 +18,6 @@ public class ObjectManager : MonoBehaviour {
     int segmentsPerItem = 3;
     int currentSegmentsPerItem = 0;
 
-    bool alternatingDirection = true;
-
     private void OnEnable() {
         gameController = GetComponent<GameController>();
         gameController.OnGameOver += OnGameOver;
@@ -62,6 +60,8 @@ public class ObjectManager : MonoBehaviour {
             Vector3 offset = GetRandomOffset(4f, 0);
             Instantiate(items[UnityEngine.Random.Range(0, items.Count)], parent.position + offset, Quaternion.identity, parent);
             currentSegmentsPerItem = 0;
+            float sign = RandomSign();
+            Instantiate(lantern, parent.position + new Vector3(sign * 2.2f, 0, 0), Quaternion.Euler(0, (sign + 1) * 90, 0), parent);
 
 
         } else {
