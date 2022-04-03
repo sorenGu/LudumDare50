@@ -7,6 +7,7 @@ public class ItemReceiver : MonoBehaviour {
     public Action OnReceiveItem;
 
     internal void ReceiveItem() {
+        //TODO animate
         OnReceiveItem?.Invoke();
     }
 }

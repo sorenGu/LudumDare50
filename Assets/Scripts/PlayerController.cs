@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,6 +8,9 @@ public class PlayerController : MonoBehaviour {
     GameController gameController;
     Rigidbody m_Rigidbody;
     Animator animator;
+    float BoundX = 18f;
+    float MinBoundZ = -5f;
+    float MaxBoundZ = 25f;
 
     private void OnEnable() {
         gameController = transform.parent.GetComponent<GameController>();
@@ -27,18 +31,29 @@ public class PlayerController : MonoBehaviour {
 
         if (direction != Vector3.zero) {
             animator.SetBool("Running", true);
-            m_Rigidbody.MovePosition(transform.position + direction * Time.deltaTime *  gameController.gameSpeed * 2);
-            /* TODO walk/run animation */
+            MoveInBounds(direction * 2);
             transform.rotation = Quaternion.Slerp(
                 transform.rotation,
                 Quaternion.LookRotation(direction),
                 Time.deltaTime * rotationSpeed
             );
         } else {
-            // TODO idle animation
             animator.SetBool("Running", false);
-            m_Rigidbody.MovePosition(transform.position + gameController.downDirection * Time.deltaTime *  gameController.gameSpeed);
+            MoveInBounds(gameController.downDirection);
         }
-        // TODO what when out of screen?
+
+    }
+
+
+    void MoveInBounds(Vector3 direction){
+        direction = direction * Time.deltaTime *  gameController.gameSpeed;
+        float _BoundX = BoundX + transform.position.z * 0.5f;
+        direction = new Vector3(
+            Mathf.Clamp(transform.position.x + direction.x, -_BoundX, _BoundX),
+            0f,
+            Mathf.Clamp(transform.position.z + direction.z, MinBoundZ, MaxBoundZ)
+        );
+
+        m_Rigidbody.MovePosition(direction);
     }
 }
