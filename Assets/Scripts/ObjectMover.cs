@@ -9,13 +9,16 @@ public class ObjectManager : MonoBehaviour {
     public List<GameObject> pathSegments;
     public List<GameObject> trees;
     public List<GameObject> items;
+    public GameObject lantern;
     float pathLength = 10f;
     float objectMaxXOffset = 22f;
 
     GameController gameController;
 
     int segmentsPerItem = 3;
-    int currentSegmentsPerItem = 1;
+    int currentSegmentsPerItem = 0;
+
+    bool alternatingDirection = true;
 
     private void OnEnable() {
         gameController = GetComponent<GameController>();
@@ -59,6 +62,8 @@ public class ObjectManager : MonoBehaviour {
             Vector3 offset = GetRandomOffset(4f, 0);
             Instantiate(items[UnityEngine.Random.Range(0, items.Count)], parent.position + offset, Quaternion.identity, parent);
             currentSegmentsPerItem = 0;
+
+
         } else {
             currentSegmentsPerItem += 1;
         }
