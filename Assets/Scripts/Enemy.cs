@@ -11,17 +11,16 @@ public class Enemy : MonoBehaviour {
 
     float eatDistance = 2f;
 
-    delegate void CurrentAction();
-    CurrentAction handler;
+    Action CurrentAction;
 
     private void OnEnable() {
         gameController = transform.parent.GetComponent<GameController>();
         animator = GetComponentInChildren<Animator>();
-        handler = CheckDistance;
+        CurrentAction = CheckDistance;
     }
 
     void Update() {
-        handler();
+        CurrentAction();
     }
 
     public void CheckDistance() {
@@ -34,7 +33,7 @@ public class Enemy : MonoBehaviour {
         if (distance < eatDistance) {
             animator.SetTrigger("GameOver");
             gameController.GameOver();
-            handler = AfterGameAction;
+            CurrentAction = AfterGameAction;
         } else if (distance < eatDistance * 4) {
             animator.SetBool("Close", true);
             // TODO rotate to closest Food
